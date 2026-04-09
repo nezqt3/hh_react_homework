@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "🔍 Running pre-commit checks..."
+
+# Запуск lint-staged
+yarn precommit
+
+# Проверка кода
+yarn lint
+
+# Проверка TypeScript
+yarn tsc --noEmit
+
+# Если все успешно
+if [ $? -eq 0 ]; then
+  echo "✅ Pre-commit checks passed!"
+  exit 0
+else
+  echo "❌ Pre-commit checks failed!"
+  exit 1
+fi
