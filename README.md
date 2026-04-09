@@ -1,1 +1,1 @@
-# hh_react_homework
+# Домашнее задание HH.ru React + Redux
