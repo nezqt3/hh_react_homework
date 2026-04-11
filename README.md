@@ -30,3 +30,19 @@ yarn dev
 ```bash
 yarn build
 ```
+
+## Деплой на GitHub Pages
+
+Проект настроен на автоматический деплой через GitHub Actions:
+
+- workflow: `.github/workflows/deploy.yml`
+- ветки для запуска: `main`, `homework`
+- опубликованный сайт: https://nezqt3.github.io/hh_react_homework/
+
+В настройках репозитория GitHub нужно выбрать:
+
+```text
+Settings -> Pages -> Source -> GitHub Actions
+```
+
+Для GitHub Pages сборка запускается с `GITHUB_PAGES=true`, чтобы Vite использовал корректный `base` для репозитория `hh_react_homework`.
