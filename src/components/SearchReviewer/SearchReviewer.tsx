@@ -1,11 +1,15 @@
-import { handleGetUsers } from '../../shared/lib/utils/api';
 import './SearchReviewer.css';
+import { fetchUsers } from '../../features/users/usersThunk';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export function SearchReviewer() {
+  const dispatch = useAppDispatch();
+  const repo = useAppSelector((state) => state.settings.repo);
+
   return (
     <div>
       <h1>Найти ревьюера</h1>
-      <button onClick={handleGetUsers}>Найти ревьюера</button>
+      <button onClick={() => dispatch(fetchUsers(repo))}>Найти ревьюера</button>
     </div>
   );
 }

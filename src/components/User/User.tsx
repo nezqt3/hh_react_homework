@@ -1,8 +1,8 @@
 import type { GithubUserData } from '../../shared/models/api';
 
-export function Reviewer({ login, id, html_url }: GithubUserData) {
+export function Reviewer({ login, html_url }: GithubUserData) {
   return (
-    <div key={id}>
+    <div>
       <p>{login}</p>
       <p>{html_url}</p>
     </div>

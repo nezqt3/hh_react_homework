@@ -1,10 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { blackListSlicer } from '../features/blacklist/blacklistSlice';
-import { userSlicer } from '../features/users/usersSlice';
+import { settingsMiddleware } from '../features/settings/settingsMiddleware';
+import { settingsSlice } from '../features/settings/settingsSlice';
+import { usersSlice } from '../features/users/usersSlice';
 
 export const store = configureStore({
-  reducer: { users: userSlicer.reducer, blacklist: blackListSlicer.reducer },
+  reducer: {
+    users: usersSlice.reducer,
+    settings: settingsSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(settingsMiddleware.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,21 +1,29 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import { GET_USERS } from '../../shared/constants/variables/states';
+import { USERS_SLICE } from '../../shared/constants/variables/states';
 
 import { fetchUsers } from './usersThunk';
 import { initialUsersState } from './usersTypes';
 
 import type { GithubUserData } from '../../shared/models/api';
 
-export const userSlicer = createSlice({
-  name: GET_USERS,
+export const usersSlice = createSlice({
+  name: USERS_SLICE,
   initialState: initialUsersState,
-  reducers: {},
+  reducers: {
+    setSelectedReviewer: (state, action: PayloadAction<GithubUserData>) => {
+      state.selectedReviewer = action.payload;
+    },
+    clearSelectedReviewer: (state) => {
+      state.selectedReviewer = null;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.selectedReviewer = null;
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<GithubUserData[]>) => {
         state.loading = false;

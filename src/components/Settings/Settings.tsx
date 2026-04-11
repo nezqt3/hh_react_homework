@@ -1,32 +1,54 @@
 import { useState } from 'react';
 
 import './Settings.css';
-import { isRepoType } from '../../shared/lib/utils/settings';
-
-import type { Repo } from '../../shared/models/settings';
+import { settingsSlice } from '../../features/settings/settingsSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 export function Settings() {
-  const [login, setLogin] = useState<string>('');
-  const [_, setRepo] = useState<Repo>('owner');
-  const [blacklist, setBlacklist] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+  const { addLogin, addRepo, removeFromBlackList } = settingsSlice.actions;
+  const [userLogin, setUserLogin] = useState<string>(
+    useAppSelector((state) => state.settings.login)
+  );
+  const [repo, setRepo] = useState<string>(useAppSelector((state) => state.settings.repo));
+  const blacklist = useAppSelector((state) => state.settings.blacklist);
 
-  const handleSelectTypeRepo = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (isRepoType(value)) {
-      setRepo(value);
-    }
+  const saveSettings = () => {
+    dispatch(addLogin(userLogin));
+    dispatch(addRepo(repo));
   };
 
   return (
     <div>
-      <input value={login} onChange={(e) => setLogin(e.target.value)} />
-      <div>
-        <input type="checkbox" value="repo" onChange={handleSelectTypeRepo} />
-        <input type="checkbox" value="owner" onChange={handleSelectTypeRepo} />
-      </div>
+      <input
+        value={userLogin ?? ''}
+        onChange={(e) => {
+          const value: string = e.target.value;
 
-      <input value={blacklist} onChange={(e) => setBlacklist(e.target.value.split(','))} />
+          setUserLogin(value);
+        }}
+      />
+      <input
+        value={repo}
+        placeholder="owner/repo"
+        onChange={(e) => {
+          setRepo(e.target.value);
+        }}
+      />
+
+      {blacklist.map((item) => {
+        return (
+          <div
+            key={item}
+            onClick={() => {
+              dispatch(removeFromBlackList(item));
+            }}
+          >
+            {item}
+          </div>
+        );
+      })}
+      <button onClick={saveSettings}>Сохранить</button>
     </div>
   );
 }
