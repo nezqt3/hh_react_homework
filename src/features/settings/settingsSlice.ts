@@ -13,9 +13,10 @@ export const settingsSlice = createSlice({
   reducers: {
     addToBlackList: (state, action: PayloadAction<string>) => {
       const login: string = normalizeLogin(action.payload);
+      const loginUser: string = normalizeLogin(state.login);
       const blacklist = state.blacklist.map(normalizeLogin);
 
-      if (login && !blacklist.includes(login)) state.blacklist.push(login);
+      if (login && !blacklist.includes(login) && loginUser !== login) state.blacklist.push(login);
     },
     removeFromBlackList: (state, action: PayloadAction<string>) => {
       const login: string = normalizeLogin(action.payload);

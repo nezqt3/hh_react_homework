@@ -16,21 +16,25 @@
   color: var(--color-red-deep);
   font-size: 20px;
   font-weight: 800;
-  letter-spacing: -0.5px;
   margin: 0;
 }
 
 .header__settings-button {
   padding: 10px 18px;
   border: 1.5px solid var(--color-red-border);
-  border-radius: 12px;
+  border-radius: 8px;
   background: var(--color-red-light);
   color: var(--color-red-main);
   font: inherit;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -38,10 +42,10 @@
 
 .header__settings-button:hover {
   background: var(--color-red-main);
-  color: #ffffff;
+  color: var(--color-white);
   border-color: var(--color-red-main);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(190, 18, 60, 0.15);
+  box-shadow: var(--shadow-button);
 }
 
 .header__settings-button:active {

@@ -8,6 +8,10 @@ export const selectUsers = (state: RootState) => state.users.data ?? [];
 export const selectCurrentLogin = (state: RootState) => state.settings.login;
 export const selectBlackList = (state: RootState) => state.settings.blacklist;
 export const selectSelectedReviewer = (state: RootState) => state.users.selectedReviewer;
+export const selectUsersLoading = (state: RootState) => state.users.loadingUsers;
+export const selectUserDetailsLoading = (state: RootState) => state.users.loadingUserDetails;
+export const selectUsersError = (state: RootState) => state.users.usersError;
+export const selectUserDetailsError = (state: RootState) => state.users.userDetailsError;
 
 export const selectReviewerCandidates = createSelector(
   [selectUsers, selectCurrentLogin, selectBlackList],

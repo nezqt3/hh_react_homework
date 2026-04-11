@@ -6,9 +6,14 @@
   --color-red-light: #fff1f2;
   --color-red-border: #fecdd3;
   --color-red-deep: #881337;
+  --color-border-soft: #ffe4e6;
+  --color-disabled-bg: #f8fafc;
+  --color-disabled-text: #94a3b8;
 
   --color-text-main: #1f2937;
   --color-text-muted: #9f1239;
 
   --shadow-soft: 0 4px 12px rgba(159, 18, 57, 0.08);
+  --shadow-header: 0 8px 24px rgba(159, 18, 57, 0.08);
+  --shadow-button: 0 10px 20px rgba(190, 18, 60, 0.16);
 }

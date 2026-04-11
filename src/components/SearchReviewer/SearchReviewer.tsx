@@ -7,9 +7,22 @@ export function SearchReviewer() {
   const repo = useAppSelector((state) => state.settings.repo);
 
   return (
-    <div>
-      <h1>Найти ревьюера</h1>
-      <button onClick={() => dispatch(fetchUsers(repo))}>Найти ревьюера</button>
+    <div className="search-reviewer">
+      <div className="search-reviewer__container">
+        <h2 className="search-reviewer__title">Найти ревьюера</h2>
+        <p className="search-reviewer__subtitle">
+          Поиск активных контрибьюторов для репозитория: <span>{repo || 'Не указано'}</span>
+        </p>
+
+        <button
+          type="button"
+          className="search-reviewer__button"
+          onClick={() => dispatch(fetchUsers(repo))}
+          disabled={!repo}
+        >
+          Запустить поиск
+        </button>
+      </div>
     </div>
   );
 }

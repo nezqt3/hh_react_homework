@@ -4,7 +4,7 @@ import './ModalOverlay.css';
 
 import { CLOSE_ANIMATION_MS } from '../../../constants/variables/time';
 
-import type { ModalOverlayProps } from '../../../models/ui';
+import type { ModalOverlayProps } from '../../../models/props';
 
 export function ModalOverlay({ children, close }: ModalOverlayProps) {
   useEffect(() => {

@@ -1,6 +1,6 @@
 import './CloseButton.css';
 
-import type { CloseProps } from '../../../models/ui';
+import type { CloseProps } from '../../../models/props';
 
 export function CloseButton({ close }: CloseProps) {
   return (

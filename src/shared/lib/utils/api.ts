@@ -2,7 +2,23 @@ import { GITHUB_API_URL } from '../../constants/variables/api';
 
 import { isRepositoryFullName } from './settings';
 
-import type { GithubUserData } from '../../models/api';
+import type { GithubUserData, GithubUserDetails } from '../../models/api';
+
+export const handleGetUserDetails = async (login: string): Promise<GithubUserDetails> => {
+  const response: Response = await fetch(`${GITHUB_API_URL}/users/${login}`, {
+    headers: {
+      Accept: 'application/vnd.github+json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const data: GithubUserDetails = await response.json();
+
+  return data;
+};
 
 export const handleGetUsers = async (fullRepoName: string): Promise<GithubUserData[]> => {
   if (!isRepositoryFullName(fullRepoName)) {
@@ -22,6 +38,10 @@ export const handleGetUsers = async (fullRepoName: string): Promise<GithubUserDa
 
   if (!response.ok) {
     throw new Error(response.statusText);
+  }
+
+  if (response.status === 204) {
+    return [];
   }
 
   const data: GithubUserData[] = await response.json();

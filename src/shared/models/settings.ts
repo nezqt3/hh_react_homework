@@ -1,4 +1,4 @@
-import type { CloseProps } from './ui';
+import type { CloseProps } from './props';
 
 export type RepositoryFullName = string;
 

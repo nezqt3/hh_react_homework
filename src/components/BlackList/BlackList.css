@@ -1,0 +1,34 @@
+.blacklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  min-height: 0;
+}
+
+.blacklist__label {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.blacklist__list {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.blacklist__empty {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px dashed var(--color-red-border);
+  border-radius: 8px;
+  background: var(--color-bg-soft);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+}

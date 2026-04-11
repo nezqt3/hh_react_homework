@@ -1,0 +1,48 @@
+.notification {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(520px, calc(100% - 32px));
+  padding: 14px 16px;
+  border: 1px solid var(--color-red-border);
+  border-radius: 8px;
+  background: var(--color-white);
+  color: var(--color-red-deep);
+  box-shadow: 0 14px 36px rgba(159, 18, 57, 0.18);
+  transform: translateX(-50%);
+  animation: notification-slide 220ms ease-out;
+}
+
+.notification__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-red-main);
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+.notification__message {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@keyframes notification-slide {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

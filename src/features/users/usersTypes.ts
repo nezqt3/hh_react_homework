@@ -1,10 +1,13 @@
-import { getUsersCache } from '../../shared/lib/utils/storage/users';
+import { getUserInfoCache, getUsersCache } from '../../shared/lib/utils/storage/users';
 
 import type { UsersState } from '../../shared/models/states';
 
 export const initialUsersState: UsersState = {
   data: getUsersCache(),
   selectedReviewer: null,
-  loading: false,
-  error: null,
+  userData: getUserInfoCache(),
+  loadingUsers: false,
+  loadingUserDetails: false,
+  usersError: null,
+  userDetailsError: null,
 };

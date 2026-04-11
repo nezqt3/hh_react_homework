@@ -6,3 +6,27 @@
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
 }
+
+body {
+  background: var(--color-bg-soft);
+  color: var(--color-text-main);
+}
+
+.main-section {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1fr);
+  align-items: center;
+  gap: 40px;
+  width: min(1120px, calc(100% - 48px));
+  min-height: calc(100vh - 73px);
+  margin: 0 auto;
+}
+
+@media (max-width: 820px) {
+  .main-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: min(100% - 32px, 560px);
+    padding: 24px 0;
+  }
+}

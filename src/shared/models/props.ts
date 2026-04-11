@@ -5,3 +5,7 @@ export interface CloseProps {
 export interface ModalOverlayProps extends CloseProps {
   children: (close: () => void) => React.ReactNode;
 }
+
+export type NotificationProps = {
+  message: string | null;
+};
