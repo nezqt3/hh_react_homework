@@ -35,7 +35,7 @@ yarn build
 
 Проект настроен на автоматический деплой через GitHub Actions:
 
-- workflow: `.github/workflows/deploy.yml`
+- workflow: `.github/workflows/cd.yml`
 - ветки для запуска: `main`, `homework`
 - опубликованный сайт: https://nezqt3.github.io/hh_react_homework/
 

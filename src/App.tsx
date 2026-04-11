@@ -1,15 +1,16 @@
+import { Header } from './components/Header/Header';
 import { ReviewersList } from './components/ReviewersList/ReviewersList';
 import { SearchReviewer } from './components/SearchReviewer/SearchReviewer';
-import { Settings } from './components/Settings/Settings';
+
 import './style/main.css';
 
 function App() {
   return (
-    <>
-      <Settings />
+    <div>
+      <Header />
       <SearchReviewer />
       <ReviewersList />
-    </>
+    </div>
   );
 }
 

@@ -7,7 +7,7 @@ import {
 } from '../../features/users/usersSelector';
 import { usersSlice } from '../../features/users/usersSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { Reviewer } from '../User/User';
+import { User } from '../User/User';
 
 export function ReviewersList() {
   const reviewers = useAppSelector(selectReviewerCandidates);
@@ -44,7 +44,7 @@ export function ReviewersList() {
   return (
     <div className="reviewer-list">
       {reviewer ? (
-        <Reviewer
+        <User
           login={reviewer.login}
           id={reviewer.id}
           html_url={reviewer.html_url}
