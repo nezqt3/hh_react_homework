@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
 import './Settings.css';
-import { settingsSlice } from '../../features/settings/settingsSlice';
-import { selectUserDetailsLoading } from '../../features/users/usersSelector';
-import { fetchUserDetails } from '../../features/users/usersThunk';
-import { CloseButton } from '../../shared/lib/ui/CloseButton/CloseButton';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { BlackList } from '../BlackList/BlackList';
+import { BlackList } from '@/components/BlackList/BlackList';
+import { settingsSlice } from '@/features/settings/settingsSlice';
+import { selectUserDetailsLoading } from '@/features/users/usersSelector';
+import { fetchUserDetails } from '@/features/users/usersThunk';
+import { CloseButton } from '@/shared/lib/ui/CloseButton/CloseButton';
+import { normalize } from '@/shared/lib/utils/normalize';
+import { isRepositoryFullName } from '@/shared/lib/utils/settings';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
-import type { SettingsProps } from '../../shared/models/settings';
+import type { SettingsProps } from './Settings.types';
 
 export function Settings({ close }: SettingsProps) {
   const dispatch = useAppDispatch();
@@ -25,14 +27,16 @@ export function Settings({ close }: SettingsProps) {
   const [userLogin, setUserLogin] = useState<string>(
     useAppSelector((state) => state.settings.login)
   );
-  const [blackList, setBlackList] = useState<string>();
+  const [blackList, setBlackList] = useState('');
 
-  const normalizedLogin = userLogin.trim().toLowerCase();
-  const normalizedRepo = repo.trim();
+  const normalizedLogin = normalize(userLogin);
+  const normalizedRepo = normalize(repo);
   const isLoginChanged = normalizedLogin !== cacheLogin;
   const isRepoChanged = normalizedRepo !== cacheRepo;
   const hasSettingsChanges = isLoginChanged || isRepoChanged;
-  const isSaveDisabled = isLoading || !hasSettingsChanges || !normalizedLogin || !normalizedRepo;
+  const isSaveDisabled =
+    isLoading || !hasSettingsChanges || !normalizedLogin || !isRepositoryFullName(normalizedRepo);
+  const isBlackListAddDisabled = !blackList.trim();
 
   const saveSettings = () => {
     if (isSaveDisabled) return;
@@ -45,7 +49,9 @@ export function Settings({ close }: SettingsProps) {
   };
 
   const handleAddToBlackList = () => {
-    blackList?.split(',').map((item) => dispatch(addToBlackList(item)));
+    if (isBlackListAddDisabled) return;
+
+    blackList.split(',').forEach((item) => dispatch(addToBlackList(item)));
     setBlackList('');
   };
 
@@ -114,6 +120,7 @@ export function Settings({ close }: SettingsProps) {
               className="settings__blacklist-add-button"
               aria-label="Добавить в черный список"
               onClick={handleAddToBlackList}
+              disabled={isBlackListAddDisabled}
             >
               +
             </button>

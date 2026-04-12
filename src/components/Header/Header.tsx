@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import './Header.css';
-import { ModalOverlay } from '../../shared/lib/ui/ModalOverlay/ModalOverlay';
-import { Settings } from '../Settings/Settings';
+import { Settings } from '@/components/Settings/Settings';
+import { ModalOverlay } from '@/shared/lib/ui/ModalOverlay/ModalOverlay';
 
 export function Header() {
   const [isOpen, setIsOpen] = useState<boolean>(false);

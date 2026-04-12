@@ -1,1 +1,1 @@
-export const normalizeLogin = (login: string) => login.trim().toLowerCase();
+export const normalize = (login: string) => login.trim().toLowerCase();

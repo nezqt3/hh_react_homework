@@ -1,4 +1,4 @@
-import { CacheType } from '../../../constants/enum/cache';
+import { CacheType } from '@/shared/constants/enum/cache';
 
 export function getStorage(type: CacheType): Storage {
   return type === CacheType.LOCAL ? localStorage : sessionStorage;

@@ -111,6 +111,14 @@ export default tseslint.config(
             'object',
             'type',
           ],
+          pathGroups: [
+            {
+              pattern: '@/**',
+              group: 'internal',
+              position: 'after',
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['builtin', 'type'],
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',

@@ -1,7 +1,7 @@
-import { settingsSlice } from '../../../features/settings/settingsSlice';
-import { useAppDispatch } from '../../../store/hooks';
+import { settingsSlice } from '@/features/settings/settingsSlice';
+import { useAppDispatch } from '@/store/hooks';
 
-import type { BlackListCardProps } from '../../../shared/models/blacklist';
+import type { BlackListCardProps } from './BlackListCard.types';
 import './BlackListCard.css';
 
 export function BlackListCard({ login }: BlackListCardProps) {

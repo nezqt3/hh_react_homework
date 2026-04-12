@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { settingsMiddleware } from '../features/settings/settingsMiddleware';
-import { settingsSlice } from '../features/settings/settingsSlice';
-import { usersMiddleware } from '../features/users/usersMiddleware';
-import { usersSlice } from '../features/users/usersSlice';
+import { settingsMiddleware } from '@/features/settings/settingsMiddleware';
+import { settingsSlice } from '@/features/settings/settingsSlice';
+import { usersMiddleware } from '@/features/users/usersMiddleware';
+import { usersSlice } from '@/features/users/usersSlice';
 
 export const store = configureStore({
   reducer: {

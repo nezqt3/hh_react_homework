@@ -1,10 +1,25 @@
 import './SearchReviewer.css';
-import { fetchUsers } from '../../features/users/usersThunk';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectUsersLoading } from '@/features/users/usersSelector';
+import { fetchUsers } from '@/features/users/usersThunk';
+import { isRepositoryFullName } from '@/shared/lib/utils/settings';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
-export function SearchReviewer() {
+import type { SearchReviewerProps } from './SearchReviewer.types';
+
+export function SearchReviewer({ onChooseReviewer }: SearchReviewerProps) {
   const dispatch = useAppDispatch();
   const repo = useAppSelector((state) => state.settings.repo);
+  const isLoading = useAppSelector(selectUsersLoading);
+  const isSearchDisabled = isLoading || !isRepositoryFullName(repo);
+
+  const handleSearch = async () => {
+    try {
+      const users = await dispatch(fetchUsers(repo)).unwrap();
+      onChooseReviewer(users);
+    } catch {
+      // noop
+    }
+  };
 
   return (
     <div className="search-reviewer">
@@ -17,10 +32,10 @@ export function SearchReviewer() {
         <button
           type="button"
           className="search-reviewer__button"
-          onClick={() => dispatch(fetchUsers(repo))}
-          disabled={!repo}
+          onClick={handleSearch}
+          disabled={isSearchDisabled}
         >
-          Запустить поиск
+          {isLoading ? 'Ищем...' : 'Запустить поиск'}
         </button>
       </div>
     </div>

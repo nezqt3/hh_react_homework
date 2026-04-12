@@ -1,8 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { normalizeLogin } from '../../shared/lib/utils/normalize';
+import { normalize } from '@/shared/lib/utils/normalize';
 
-import type { RootState } from '../../store/store';
+import type { RootState } from '@/store/store';
 
 export const selectUsers = (state: RootState) => state.users.data ?? [];
 export const selectCurrentLogin = (state: RootState) => state.settings.login;
@@ -16,10 +16,8 @@ export const selectUserDetailsError = (state: RootState) => state.users.userDeta
 export const selectReviewerCandidates = createSelector(
   [selectUsers, selectCurrentLogin, selectBlackList],
   (users, currentLogin, blacklist) => {
-    const excludedLogins = new Set(
-      [currentLogin, ...blacklist].map(normalizeLogin).filter(Boolean)
-    );
+    const excludedLogins = new Set([currentLogin, ...blacklist].map(normalize).filter(Boolean));
 
-    return users.filter((user) => !excludedLogins.has(normalizeLogin(user.login)));
+    return users.filter((user) => !excludedLogins.has(normalize(user.login)));
   }
 );

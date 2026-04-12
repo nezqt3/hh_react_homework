@@ -1,11 +1,11 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import { USERS_SLICE } from '../../shared/constants/variables/states';
+import { USERS_SLICE } from '@/shared/constants/variables/states';
 
 import { fetchUserDetails, fetchUsers } from './usersThunk';
 import { initialUsersState } from './usersTypes';
 
-import type { GithubUserData, GithubUserDetails } from '../../shared/models/api';
+import type { GithubUserData, GithubUserDetails } from '@/shared/models/api';
 
 export const usersSlice = createSlice({
   name: USERS_SLICE,
@@ -25,6 +25,7 @@ export const usersSlice = createSlice({
       .addCase(fetchUsers.pending, (state) => {
         state.loadingUsers = true;
         state.usersError = null;
+        state.data = null;
         state.selectedReviewer = null;
       })
       .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<GithubUserData[]>) => {
@@ -33,7 +34,9 @@ export const usersSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loadingUsers = false;
-        state.usersError = action.error.message ?? 'Что-то пошло не так';
+        state.data = null;
+        state.selectedReviewer = null;
+        state.usersError = action.error.message || 'Что-то пошло не так';
       })
 
       // fetchUserDetails
@@ -47,7 +50,7 @@ export const usersSlice = createSlice({
       })
       .addCase(fetchUserDetails.rejected, (state, action) => {
         state.loadingUserDetails = false;
-        state.userDetailsError = action.error.message ?? 'Что-то пошло не так';
+        state.userDetailsError = action.error.message || 'Что-то пошло не так';
       });
   },
 });

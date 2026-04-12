@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import './ModalOverlay.css';
 
-import { CLOSE_ANIMATION_MS } from '../../../constants/variables/time';
+import { CLOSE_ANIMATION_MS } from '@/shared/constants/variables/time';
 
-import type { ModalOverlayProps } from '../../../models/props';
+import type { ModalOverlayProps } from './ModalOverlay.types';
 
 export function ModalOverlay({ children, close }: ModalOverlayProps) {
   useEffect(() => {

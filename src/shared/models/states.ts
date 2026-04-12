@@ -1,5 +1,5 @@
-import type { GithubUserData, GithubUserDetails } from './api';
-import type { RepositoryFullName } from './settings';
+import type { GithubUserData, GithubUserDetails } from '@/shared/models/api';
+import type { RepositoryFullName } from '@/shared/models/settings';
 
 export type UsersState = {
   data: GithubUserData[] | null;

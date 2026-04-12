@@ -194,6 +194,15 @@
   transform: translateY(0) scale(0.96);
 }
 
+.settings__blacklist-add-button:disabled {
+  border-color: var(--color-border-soft);
+  background: var(--color-disabled-bg);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 .settings__save-button {
   width: 100%;
   padding: 14px 16px;

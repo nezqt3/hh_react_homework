@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { handleGetUserDetails, handleGetUsers } from '../../shared/lib/utils/api';
+import { handleGetUserDetails, handleGetUsers } from '@/shared/lib/utils/api';
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', handleGetUsers);
 

@@ -23,12 +23,19 @@
 .search-reviewer__subtitle {
   color: var(--color-text-muted);
   font-size: 16px;
+  line-height: 1.5;
   margin-bottom: 32px;
 }
 
 .search-reviewer__subtitle span {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  vertical-align: bottom;
   color: var(--color-red-main);
   font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   background: var(--color-red-light);
   padding: 2px 8px;
   border-radius: 6px;

@@ -1,4 +1,4 @@
-import type { GithubUserCardData } from '../../shared/models/api';
+import type { GithubUserCardData } from '@/shared/models/api';
 
 import './Reviewer.css';
 

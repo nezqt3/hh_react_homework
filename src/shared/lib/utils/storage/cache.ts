@@ -1,4 +1,4 @@
-import { CacheType } from '../../../constants/enum/cache';
+import { CacheType } from '@/shared/constants/enum/cache';
 
 import {
   getLocalItem,
@@ -9,7 +9,7 @@ import {
   setSessionItem,
 } from './core';
 
-import type { CachedValue } from '../../../models/cache';
+import type { CachedValue } from '@/shared/models/cache';
 
 export function readCache<T>(key: string, type: CacheType = CacheType.LOCAL): T | null {
   try {

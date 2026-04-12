@@ -30,9 +30,47 @@
 }
 
 .notification__message {
+  flex: 1;
   margin: 0;
   font-size: 14px;
   font-weight: 600;
+}
+
+.notification__close {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-red-border);
+  border-radius: 8px;
+  background: var(--color-white);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.notification__close:hover {
+  border-color: var(--color-red-main);
+  background: var(--color-red-light);
+}
+
+.notification__close-line {
+  position: absolute;
+  width: 12px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--color-red-main);
+}
+
+.notification__close-line:first-child {
+  transform: rotate(45deg);
+}
+
+.notification__close-line:last-child {
+  transform: rotate(-45deg);
 }
 
 @keyframes notification-slide {
