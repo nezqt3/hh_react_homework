@@ -2,18 +2,38 @@ import { GITHUB_API_URL } from '@/shared/constants/variables/api';
 
 import { isRepositoryFullName } from './settings';
 
-import type { GithubUserData, GithubUserDetails } from '@/shared/models/api';
+import type { GithubErrorBody, GithubUserData, GithubUserDetails } from '@/shared/models/api';
 
-const getGithubErrorMessage = (response: Response, entityName: string): string => {
-  if (response.status === 404) {
-    return `${entityName} не найден`;
+const getGithubErrorMessage = async (response: Response, entityName: string): Promise<string> => {
+  let body: GithubErrorBody | null = null;
+
+  try {
+    body = (await response.json()) as GithubErrorBody;
+  } catch {
+    body = null;
   }
 
-  if (response.status === 403) {
+  const message = body?.message?.toLowerCase() ?? '';
+  const remaining = response.headers.get('x-ratelimit-remaining');
+  const retryAfter = response.headers.get('retry-after');
+
+  if (
+    response.status === 429 ||
+    ((response.status === 403 || response.status === 429) &&
+      (remaining === '0' || retryAfter || message.includes('rate limit')))
+  ) {
     return 'Превышен лимит запросов GitHub API';
   }
 
-  return response.statusText || `Ошибка GitHub API: ${response.status}`;
+  if (response.status === 404) {
+    return `${entityName} не найден или нет доступа`;
+  }
+
+  if (response.status === 403) {
+    return `Нет доступа к ${entityName.toLowerCase()}`;
+  }
+
+  return body?.message || `Ошибка GitHub API: ${response.status}`;
 };
 
 export const handleGetUserDetails = async (login: string): Promise<GithubUserDetails> => {
@@ -24,7 +44,7 @@ export const handleGetUserDetails = async (login: string): Promise<GithubUserDet
   });
 
   if (!response.ok) {
-    throw new Error(getGithubErrorMessage(response, 'Пользователь'));
+    throw new Error(await getGithubErrorMessage(response, 'Пользователь'));
   }
 
   const data: GithubUserDetails = await response.json();
@@ -49,7 +69,7 @@ export const handleGetUsers = async (fullRepoName: string): Promise<GithubUserDa
   );
 
   if (!response.ok) {
-    throw new Error(getGithubErrorMessage(response, 'Репозиторий'));
+    throw new Error(await getGithubErrorMessage(response, 'Репозиторий'));
   }
 
   if (response.status === 204) {

@@ -1,4 +1,6 @@
 import './SearchReviewer.css';
+import { useEffect, useRef } from 'react';
+
 import { selectUsersLoading } from '@/features/users/usersSelector';
 import { fetchUsers } from '@/features/users/usersThunk';
 import { isRepositoryFullName } from '@/shared/lib/utils/settings';
@@ -6,15 +8,27 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 import type { SearchReviewerProps } from './SearchReviewer.types';
 
-export function SearchReviewer({ onChooseReviewer }: SearchReviewerProps) {
+export function SearchReviewer({ onChooseReviewer, isChoosing }: SearchReviewerProps) {
   const dispatch = useAppDispatch();
   const repo = useAppSelector((state) => state.settings.repo);
+  const repoRef = useRef(repo);
   const isLoading = useAppSelector(selectUsersLoading);
   const isSearchDisabled = isLoading || !isRepositoryFullName(repo);
 
+  useEffect(() => {
+    repoRef.current = repo;
+  }, [repo]);
+
   const handleSearch = async () => {
+    const requestedRepo = repo;
+
     try {
-      const users = await dispatch(fetchUsers(repo)).unwrap();
+      const users = await dispatch(fetchUsers(requestedRepo)).unwrap();
+
+      if (repoRef.current !== requestedRepo) {
+        return;
+      }
+
       onChooseReviewer(users);
     } catch {
       // noop
@@ -33,7 +47,7 @@ export function SearchReviewer({ onChooseReviewer }: SearchReviewerProps) {
           type="button"
           className="search-reviewer__button"
           onClick={handleSearch}
-          disabled={isSearchDisabled}
+          disabled={isSearchDisabled || isChoosing}
         >
           {isLoading ? 'Ищем...' : 'Запустить поиск'}
         </button>

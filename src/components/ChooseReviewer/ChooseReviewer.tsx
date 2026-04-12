@@ -7,7 +7,10 @@ export function ChooseReviewer() {
 
   return (
     <div className="main-section">
-      <SearchReviewer onChooseReviewer={reviewerSelection.chooseReviewer} />
+      <SearchReviewer
+        onChooseReviewer={reviewerSelection.chooseReviewer}
+        isChoosing={reviewerSelection.isChoosing}
+      />
       <ReviewersList
         reviewer={reviewerSelection.reviewer}
         reviewersCount={reviewerSelection.reviewersCount}

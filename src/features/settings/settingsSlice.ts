@@ -23,7 +23,10 @@ export const settingsSlice = createSlice({
       state.blacklist = state.blacklist.filter((item) => normalize(item) !== login);
     },
     addLogin: (state, action: PayloadAction<string>) => {
-      state.login = normalize(action.payload);
+      const login: string = normalize(action.payload);
+
+      state.login = login;
+      state.blacklist = state.blacklist.filter((item) => normalize(item) !== login);
     },
     addRepo: (state, action: PayloadAction<RepositoryFullName>) => {
       state.repo = action.payload.trim();

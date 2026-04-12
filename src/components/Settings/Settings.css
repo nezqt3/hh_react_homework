@@ -149,6 +149,51 @@
   color: var(--color-disabled-text);
 }
 
+.settings__input-field {
+  position: relative;
+}
+
+.settings__input--with-clear {
+  padding-right: 44px;
+}
+
+.settings__input-clear {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-red-main);
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.settings__input-clear:hover {
+  border-color: var(--color-red-border);
+  background: var(--color-red-light);
+  color: var(--color-red-deep);
+}
+
+.settings__field-error {
+  margin: -2px 0 0;
+  opacity: 0.75;
+  color: var(--color-red-main);
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .settings__group-blacklist-add {
   display: flex;
   flex-direction: row;

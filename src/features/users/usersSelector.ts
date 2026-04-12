@@ -7,7 +7,7 @@ import type { RootState } from '@/store/store';
 export const selectUsers = (state: RootState) => state.users.data ?? [];
 export const selectCurrentLogin = (state: RootState) => state.settings.login;
 export const selectBlackList = (state: RootState) => state.settings.blacklist;
-export const selectSelectedReviewer = (state: RootState) => state.users.selectedReviewer;
+const selectSelectedReviewerData = (state: RootState) => state.users.selectedReviewer;
 export const selectUsersLoading = (state: RootState) => state.users.loadingUsers;
 export const selectUserDetailsLoading = (state: RootState) => state.users.loadingUserDetails;
 export const selectUsersError = (state: RootState) => state.users.usersError;
@@ -19,5 +19,18 @@ export const selectReviewerCandidates = createSelector(
     const excludedLogins = new Set([currentLogin, ...blacklist].map(normalize).filter(Boolean));
 
     return users.filter((user) => !excludedLogins.has(normalize(user.login)));
+  }
+);
+
+export const selectSelectedReviewer = createSelector(
+  [selectSelectedReviewerData, selectCurrentLogin, selectBlackList],
+  (reviewer, currentLogin, blacklist) => {
+    if (!reviewer) {
+      return null;
+    }
+
+    const excludedLogins = new Set([currentLogin, ...blacklist].map(normalize).filter(Boolean));
+
+    return excludedLogins.has(normalize(reviewer.login)) ? null : reviewer;
   }
 );

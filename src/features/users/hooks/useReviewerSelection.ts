@@ -54,6 +54,7 @@ export function useReviewerSelection() {
 
       if (!availableCandidates.length) {
         dispatch(clearSelectedReviewer());
+        setIsChoosing(false);
         return;
       }
 

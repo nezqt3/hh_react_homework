@@ -10,4 +10,5 @@ export const initialUsersState: UsersState = {
   loadingUserDetails: false,
   usersError: null,
   userDetailsError: null,
+  usersRequestId: null,
 };

@@ -45,3 +45,13 @@ export type GithubUserDetails = Omit<GithubUserData, 'contributions'> & {
   created_at: string;
   updated_at: string;
 };
+
+export type GithubErrorBody = {
+  message?: string;
+  documentation_url?: string;
+  status?: string;
+  errors?: Array<{
+    message?: string;
+    code?: string;
+  }>;
+};

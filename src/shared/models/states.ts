@@ -9,6 +9,7 @@ export type UsersState = {
   loadingUserDetails: boolean;
   usersError: string | null;
   userDetailsError: string | null;
+  usersRequestId: string | null;
 };
 
 export type SettingsState = {

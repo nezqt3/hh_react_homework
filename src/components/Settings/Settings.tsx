@@ -4,6 +4,7 @@ import './Settings.css';
 import { BlackList } from '@/components/BlackList/BlackList';
 import { settingsSlice } from '@/features/settings/settingsSlice';
 import { selectUserDetailsLoading } from '@/features/users/usersSelector';
+import { usersSlice } from '@/features/users/usersSlice';
 import { fetchUserDetails } from '@/features/users/usersThunk';
 import { CloseButton } from '@/shared/lib/ui/CloseButton/CloseButton';
 import { normalize } from '@/shared/lib/utils/normalize';
@@ -15,6 +16,7 @@ import type { SettingsProps } from './Settings.types';
 export function Settings({ close }: SettingsProps) {
   const dispatch = useAppDispatch();
   const { addLogin, addRepo, addToBlackList } = settingsSlice.actions;
+  const { clearUserData } = usersSlice.actions;
 
   const userData = useAppSelector((state) => state.users.userData);
 
@@ -34,18 +36,32 @@ export function Settings({ close }: SettingsProps) {
   const isLoginChanged = normalizedLogin !== cacheLogin;
   const isRepoChanged = normalizedRepo !== cacheRepo;
   const hasSettingsChanges = isLoginChanged || isRepoChanged;
-  const isSaveDisabled =
-    isLoading || !hasSettingsChanges || !normalizedLogin || !isRepositoryFullName(normalizedRepo);
+  const isRepoValid = !normalizedRepo || isRepositoryFullName(normalizedRepo);
+  const shouldShowRepoError = Boolean(normalizedRepo) && !isRepoValid;
+  const isSaveDisabled = isLoading || !hasSettingsChanges || !isRepoValid;
   const isBlackListAddDisabled = !blackList.trim();
 
-  const saveSettings = () => {
+  const saveSettings = async () => {
     if (isSaveDisabled) return;
 
-    if (isLoginChanged) {
-      dispatch(fetchUserDetails(normalizedLogin));
-      dispatch(addLogin(normalizedLogin));
+    if (isRepoChanged) {
+      dispatch(addRepo(normalizedRepo));
     }
-    if (isRepoChanged) dispatch(addRepo(normalizedRepo));
+
+    if (isLoginChanged) {
+      if (!normalizedLogin) {
+        dispatch(clearUserData());
+        dispatch(addLogin(normalizedLogin));
+        return;
+      }
+
+      try {
+        await dispatch(fetchUserDetails(normalizedLogin)).unwrap();
+        dispatch(addLogin(normalizedLogin));
+      } catch {
+        return;
+      }
+    }
   };
 
   const handleAddToBlackList = () => {
@@ -86,24 +102,51 @@ export function Settings({ close }: SettingsProps) {
 
         <div className="settings__group">
           <label className="settings__label">GitHub Login</label>
-          <input
-            className="settings__input"
-            value={userLogin}
-            placeholder="Например: nezqt3"
-            onChange={(e) => {
-              setUserLogin(e.target.value);
-            }}
-          />
+          <div className="settings__input-field">
+            <input
+              className="settings__input settings__input--with-clear"
+              value={userLogin}
+              placeholder="Например: nezqt3"
+              onChange={(e) => {
+                setUserLogin(e.target.value);
+              }}
+            />
+            {userLogin && (
+              <button
+                type="button"
+                className="settings__input-clear"
+                aria-label="Очистить GitHub login"
+                onClick={() => setUserLogin('')}
+              >
+                ×
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="settings__group">
           <label className="settings__label">Репозиторий</label>
-          <input
-            className="settings__input"
-            value={repo}
-            placeholder="owner/repo"
-            onChange={(e) => setRepo(e.target.value)}
-          />
+          <div className="settings__input-field">
+            <input
+              className="settings__input settings__input--with-clear"
+              value={repo}
+              placeholder="owner/repo"
+              onChange={(e) => setRepo(e.target.value)}
+            />
+            {repo && (
+              <button
+                type="button"
+                className="settings__input-clear"
+                aria-label="Очистить репозиторий"
+                onClick={() => setRepo('')}
+              >
+                ×
+              </button>
+            )}
+          </div>
+          {shouldShowRepoError && (
+            <p className="settings__field-error">Формат репозитория: owner/repo</p>
+          )}
         </div>
 
         <div className="settings__group">
